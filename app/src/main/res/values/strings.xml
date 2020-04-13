@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">WhatsIns</string>
+    <string name="regName">Name</string>
+    <string name="regPassword">Password</string>
+    <string name="regPassword2">Confirm Password</string>
+    <string name="regEmail">Email</string>
+    <string name="regLogin">Login</string>
 </resources>

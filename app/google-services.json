@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "646596443796",
+    "firebase_url": "https://whatsins.firebaseio.com",
+    "project_id": "whatsins",
+    "storage_bucket": "whatsins.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:646596443796:android:e1325ca458df0fca3bfe81",
+        "android_client_info": {
+          "package_name": "com.terryyessfung.whatsins"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "646596443796-siplvd4d1m46hrm24h70gkos7b533m5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-ZFi-lLr4EvU2h2wjqyZse6g5v2vhvAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "646596443796-siplvd4d1m46hrm24h70gkos7b533m5g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
