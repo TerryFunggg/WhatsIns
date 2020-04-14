@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -29,4 +30,5 @@ dependencies {
 
     // other dependencies
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }
