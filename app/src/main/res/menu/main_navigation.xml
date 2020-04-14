@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/nav_follow"
+        android:id="@+id/bottomNav_home"
+        android:icon="@drawable/ic_home"/>
+
+    <item android:title="@string/nav_discover"
+    android:id="@+id/bottomNav_discover"
+    android:icon="@drawable/ic_discover"/>
+
+    <item android:title="@string/nav_post"
+        android:id="@+id/bottomNav_post"
+        android:icon="@drawable/ic_post"/>
+
+    <item android:title="@string/nav_notification"
+        android:id="@+id/bottomNav_notify"
+        android:icon="@drawable/ic_notifications"/>
+
+    <item android:title="@string/nav_user"
+        android:id="@+id/bottomNav_user"
+        android:icon="@drawable/ic_person_black_24dp"/>
+
+</menu>

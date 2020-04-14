@@ -5,4 +5,9 @@
     <string name="regPassword2">Confirm Password</string>
     <string name="regEmail">Email</string>
     <string name="regLogin">Login</string>
+    <string name="nav_follow">Follow</string>
+    <string name="nav_discover">Discover</string>
+    <string name="nav_post">Post</string>
+    <string name="nav_notification">Notification</string>
+    <string name="nav_user">User</string>
 </resources>
