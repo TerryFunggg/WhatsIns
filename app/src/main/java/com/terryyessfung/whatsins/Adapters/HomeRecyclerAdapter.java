@@ -47,14 +47,17 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView img;
         CheckBox like;
+        CheckBox comment;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.row_postImg);
             like = itemView.findViewById(R.id.row_fav);
-            like.setOnClickListener(likeOnClick);
+            comment = itemView.findViewById(R.id.row_comment);
+            like.setOnClickListener(rowOnClick);
+            comment.setOnClickListener(rowOnClick);
         }
 
-        View.OnClickListener likeOnClick = new View.OnClickListener() {
+        View.OnClickListener rowOnClick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Animation animation = AnimationUtils.loadAnimation(v.getContext(),R.anim.like_amin);

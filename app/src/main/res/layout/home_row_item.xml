@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         android:button="@null"
         android:checked="false"
-        android:background="@drawable/ic_chat_bubble_outline_black_24dp" />
+        android:background="@drawable/comment_icon" />
 
     <ImageView
         android:id="@+id/row_postImg"
@@ -75,7 +75,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="10dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/row_fav"
