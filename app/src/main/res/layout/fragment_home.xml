@@ -15,5 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/home_row"/>
+        tools:listitem="@layout/home_row_item"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.terryyessfung.whatsins.Adapters.HomeRecyclerAdapter;
 import com.terryyessfung.whatsins.Model.Row;
 import com.terryyessfung.whatsins.R;
@@ -23,6 +24,8 @@ public class HomeFragment extends Fragment {
     private RecyclerView staggeredRvView;
     private HomeRecyclerAdapter mHomeRecyclerAdapter;
     private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
+    List<Row> list;
+
 
     public HomeFragment(){
 
@@ -38,36 +41,38 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        list = new ArrayList<>();
+        list.add(new Row(R.drawable.aa));
+        list.add(new Row(R.drawable.ee));
+        list.add(new Row(R.drawable.ff));
+        list.add(new Row(R.drawable.gg));
+        list.add(new Row(R.drawable.bb));
+        list.add(new Row(R.drawable.cc));
+        list.add(new Row(R.drawable.dd));
+        list.add(new Row(R.drawable.hh));
+        list.add(new Row(R.drawable.aa));
+        list.add(new Row(R.drawable.ee));
+        list.add(new Row(R.drawable.ff));
+        list.add(new Row(R.drawable.gg));
+        list.add(new Row(R.drawable.bb));
+        list.add(new Row(R.drawable.cc));
+        list.add(new Row(R.drawable.dd));
+        list.add(new Row(R.drawable.hh));
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container,false);
+        staggeredRvView = view.findViewById(R.id.recyclerView_home);
 
-        staggeredRvView = getView().findViewById(R.id.recyclerView_home);
-        return inflater.inflate(R.layout.fragment_home,container,false);
+        fetchPost();
+        return view;
     }
 
     public void fetchPost(){
-        List<Row> list = new ArrayList<>();
-        list.add(new Row(R.drawable.aa));
-        list.add(new Row(R.drawable.ee));
-        list.add(new Row(R.drawable.ff));
-        list.add(new Row(R.drawable.gg));
-        list.add(new Row(R.drawable.bb));
-        list.add(new Row(R.drawable.cc));
-        list.add(new Row(R.drawable.dd));
-        list.add(new Row(R.drawable.hh));
-        list.add(new Row(R.drawable.aa));
-        list.add(new Row(R.drawable.ee));
-        list.add(new Row(R.drawable.ff));
-        list.add(new Row(R.drawable.gg));
-        list.add(new Row(R.drawable.bb));
-        list.add(new Row(R.drawable.cc));
-        list.add(new Row(R.drawable.dd));
-        list.add(new Row(R.drawable.hh));
-
-        //mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
+       // mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         staggeredRvView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mHomeRecyclerAdapter = new HomeRecyclerAdapter(getContext(),list);
         staggeredRvView.setAdapter(mHomeRecyclerAdapter);

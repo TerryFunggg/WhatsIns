@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#fff</color>
-    <color name="colorPrimaryDark">#FFEB3B</color>
+    <color name="colorPrimaryDark">#F9AA33</color>
     <color name="colorAccent">#FFEB3B</color>
+    <color name="colorReplyBlue">#344955</color>
+    <color name="colorReplyBlue_600">#4a6572</color>
+    <color name="bar_icon">#7E7E7E</color>
 </resources>
