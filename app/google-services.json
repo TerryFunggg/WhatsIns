@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "646596443796-b0ttainonppmhvceljcm8l9vsq1e6d4n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.terryyessfung.whatsins",
+            "certificate_hash": "39f422610f198779039b8321312444a0cd247def"
+          }
+        },
+        {
           "client_id": "646596443796-siplvd4d1m46hrm24h70gkos7b533m5g.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,5 +1,6 @@
 package com.terryyessfung.whatsins.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -18,8 +19,17 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.terryyessfung.whatsins.Model.User;
 import com.terryyessfung.whatsins.R;
+
+import java.util.HashMap;
 
 // TODO: Login with firebase or own web server
 
@@ -31,6 +41,10 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mEmail, mPassword, mPassword2, mName;
     private Button registerBtn;
     private ProgressBar loadingProgess;
+
+    //Firebase
+    FirebaseAuth mAuth;
+    DatabaseReference mReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +58,8 @@ public class RegisterActivity extends AppCompatActivity {
         mPassword2 = findViewById(R.id.regPassword2);
         registerBtn = findViewById(R.id.regBtn);
         loadingProgess = findViewById(R.id.regProgressBar);
+        buttonIsProgress(false);
+        mAuth = FirebaseAuth.getInstance();
 
         // Register button
         registerBtn.setOnClickListener(new View.OnClickListener() {
@@ -83,8 +99,39 @@ public class RegisterActivity extends AppCompatActivity {
     /**
      * Create user ,send auth request to web server
      **/
-    private void createUser(User newUser) {
+    private void createUser(final User newUser) {
         // TODO: Create user function, connect to web server
+        mAuth.createUserWithEmailAndPassword(newUser.getEmail(),newUser.getPassword())
+                .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                            String userID = firebaseUser.getUid();
+
+                            mReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+                            HashMap<String,Object> bashMap = new HashMap<>();
+                            bashMap.put("id", userID);
+                            bashMap.put("username", newUser.getName().toLowerCase());
+                            bashMap.put("avator", "https://firebasestorage.googleapis.com/v0/b/whatsins.appspot.com/o/ic_launcher.png?alt=media&token=0f12314e-74ce-4d2e-9eb6-503a167ba380");
+
+                            mReference.setValue(bashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        buttonIsProgress(false);
+                                        Intent intent = new Intent(RegisterActivity.this , MainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
+                        }else{
+                            buttonIsProgress(false);
+                            showMessage("Can't register....");
+                        }
+                    }
+                });
     }
 
     /**
