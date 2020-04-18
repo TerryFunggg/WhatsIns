@@ -13,4 +13,7 @@
     <string name="register_question">Already Have account?</string>
     <string name="start_register">Register</string>
     <string name="start_login">Login</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

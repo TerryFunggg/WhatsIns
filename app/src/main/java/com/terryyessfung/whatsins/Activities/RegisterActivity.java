@@ -51,11 +51,11 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         // init value
-        mavatar = findViewById(R.id.avatar);
+        mavatar = findViewById(R.id.editor_profile_avatar);
         mEmail = findViewById(R.id.regEmail);
         mName = findViewById(R.id.regName);
         mPassword = findViewById(R.id.regPassword);
-        mPassword2 = findViewById(R.id.regPassword2);
+        mPassword2 = findViewById(R.id.edit_profile_username);
         registerBtn = findViewById(R.id.regBtn);
         loadingProgess = findViewById(R.id.regProgressBar);
         buttonIsProgress(false);
@@ -66,19 +66,20 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonIsProgress(true);
-                User newUser = new User(mEmail.getText().toString(),
-                                        mName.getText().toString(),
-                                        mPassword.getText().toString());
+                final String email = mEmail.getText().toString();
+                final String username = mName.getText().toString();
+                final String password = mPassword.getText().toString();
                 final String password2 = mPassword2.getText().toString();
                 // Check field
-                if(newUser.verifyField() && newUser.comparePassword(password2))
-                {
-                    showMessage("Fields are not all verify");
-                    buttonIsProgress(false);
-                }
-                else {
-                    createUser(newUser);
-                }
+                // TODO: verify field
+//                if(newUser.verifyField() && newUser.comparePassword(password2))
+//                {
+//                    showMessage("Fields are not all verify");
+//                    buttonIsProgress(false);
+//                }
+//                else {
+                    createUser(email,username,password);
+//               // }
             }
         });
 
@@ -96,12 +97,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Create user ,send auth request to web server
-     **/
-    private void createUser(final User newUser) {
+    private void createUser(String email, final String username, String password) {
         // TODO: Create user function, connect to web server
-        mAuth.createUserWithEmailAndPassword(newUser.getEmail(),newUser.getPassword())
+        mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -112,8 +110,8 @@ public class RegisterActivity extends AppCompatActivity {
                             mReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
                             HashMap<String,Object> bashMap = new HashMap<>();
                             bashMap.put("id", userID);
-                            bashMap.put("username", newUser.getName().toLowerCase());
-                            bashMap.put("avator", "https://firebasestorage.googleapis.com/v0/b/whatsins.appspot.com/o/ic_launcher.png?alt=media&token=0f12314e-74ce-4d2e-9eb6-503a167ba380");
+                            bashMap.put("username", username.toLowerCase());
+                            bashMap.put("avatar", "https://firebasestorage.googleapis.com/v0/b/whatsins.appspot.com/o/ic_launcher.png?alt=media&token=0f12314e-74ce-4d2e-9eb6-503a167ba380");
 
                             mReference.setValue(bashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -132,6 +130,13 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    /**
+     * Create user ,send auth request to web server
+     **/
+    private void createUser(final User newUser) {
+
     }
 
     /**

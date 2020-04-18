@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/notification_item_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/notification_item_avatar"
+        android:layout_marginStart="5dp"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/notification_item_username"
+            android:text=""
+            android:minLines="1"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/notification_item_message"
+            android:text=""
+            android:textColor="@color/content_text_color"
+            android:minLines="1"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:id="@+id/notification_post_img"
+        android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>

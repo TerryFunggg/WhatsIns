@@ -1,47 +1,50 @@
 package com.terryyessfung.whatsins.Model;
 
 public class User {
-    private String email;
-    private String name;
-    private String password;
+    private String id;
+    private String avatar;
+    private String username;
+    private String bio;
 
     public User() {
     }
 
-    public User( String email, String name, String password) {
-        this.email = email;
-        this.name = name;
-        this.password = password;
-    }
-    public String getEmail() {
-        return email;
+    public User(String id, String avatar, String username, String bio) {
+        this.id = id;
+        this.avatar = avatar;
+        this.username = username;
+        this.bio = bio;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getId() {
+        return id;
     }
 
-    public String getName() {
-        return name;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public String getPassword() {
-        return password;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getUsername() {
+        return username;
     }
 
-    public boolean verifyField() {
-        return !email.isEmpty() && !password.isEmpty() && !name.isEmpty();
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public boolean comparePassword(String password2) {
-        return password == password2;
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }

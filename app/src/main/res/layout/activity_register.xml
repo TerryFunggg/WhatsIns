@@ -67,7 +67,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <EditText
-        android:id="@+id/regPassword2"
+        android:id="@+id/edit_profile_username"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -95,10 +95,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/regPassword2" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_username" />
 
     <ImageView
-        android:id="@+id/avatar"
+        android:id="@+id/editor_profile_avatar"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@mipmap/ic_launcher"
