@@ -9,12 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.terryyessfung.whatsins.Activities.PostsDetailActivity;
-import com.terryyessfung.whatsins.Fragments.PostDetailFragment;
 import com.terryyessfung.whatsins.Model.Post;
 import com.terryyessfung.whatsins.R;
 

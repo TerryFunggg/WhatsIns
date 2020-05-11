@@ -114,7 +114,6 @@ public class PostImgActivity extends AppCompatActivity {
 
    private void cropImage (){
        CropImage.activity()
-               //.setAspectRatio(1,1)
                .start(PostImgActivity.this);
    }
 
@@ -148,7 +147,9 @@ public class PostImgActivity extends AppCompatActivity {
                }
            });
        }else{
-           Toast.makeText(this, "No image Selected", Toast.LENGTH_SHORT).show();
+           Toast.makeText(this, R.string.post_img_wrong, Toast.LENGTH_SHORT).show();
+           mProgressBar.setVisibility(View.INVISIBLE);
+           post.setVisibility(View.VISIBLE);
        }
     }
 
@@ -161,7 +162,7 @@ public class PostImgActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             imageUri = result.getUri();
             post_image.setImageURI(imageUri);
@@ -173,27 +174,23 @@ public class PostImgActivity extends AppCompatActivity {
                         new FirebaseVisionOnDeviceImageLabelerOptions.Builder().setConfidenceThreshold(0.7f).build();
                 FirebaseVisionImageLabeler labeler = FirebaseVision.getInstance().getOnDeviceImageLabeler(options);
                 labeler.processImage(image).addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
-                @Override
-                public void onSuccess(List<FirebaseVisionImageLabel> firebaseVisionImageLabels) {
-                    String message = "";
-                    image_label.setText(message);
-                    int i = 0; // label limit
-                    for(FirebaseVisionImageLabel label : firebaseVisionImageLabels){
-                        if(i >= 5) break;
-                        message += "#" + label.getText() + " ";
-                        i++;
+                    @Override
+                    public void onSuccess(List<FirebaseVisionImageLabel> firebaseVisionImageLabels) {
+                        String message = "";
+                        image_label.setText(message);
+                        int i = 0; // label limit
+                        for (FirebaseVisionImageLabel label : firebaseVisionImageLabels) {
+                            if (i >= 5) break;
+                            message += "#" + label.getText() + " ";
+                            i++;
+                        }
+                        image_label.setText(message);
                     }
-                    image_label.setText(message);
-                }
-            });
-            }catch (IOException e){
-                Log.d(TAG_PostImg,e.getMessage());
+                });
+            } catch (IOException e) {
+                Log.d(TAG_PostImg, e.getMessage());
             }
 
-        }else{
-            Toast.makeText(this," Something gone wrong", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(PostImgActivity.this,MainActivity.class));
-            finish();
         }
     }
 }

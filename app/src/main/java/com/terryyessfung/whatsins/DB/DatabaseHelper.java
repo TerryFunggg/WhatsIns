@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "WHATSINS.DB";
     public static final String TABLE_NAME = "USER";
-   // cloumns
     public static final String _id = "_id";
     public static final String token = "token";
 

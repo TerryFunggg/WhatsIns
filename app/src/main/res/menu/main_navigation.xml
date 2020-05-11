@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<!--    <item android:title="@string/nav_follow"-->
+
+<!--    <item android:title=""-->
 <!--        android:id="@+id/bottomNav_home"-->
-<!--        android:icon="@drawable/ic_home"/>-->
-    <item android:title=""
-        android:id="@+id/bottomNav_home"
-        android:icon="@drawable/twotone_home_24" />
+<!--        android:icon="@drawable/twotone_home_24" />-->
 
-    <item android:title=""
-        android:id="@+id/bottomNav_discover"
-        android:icon="@drawable/twotone_search_black_24" />
+<!--    <item android:title=""-->
+<!--        android:id="@+id/bottomNav_discover"-->
+<!--        android:icon="@drawable/twotone_search_black_24" />-->
 
-    <item android:title=""
-        android:id="@+id/bottomNav_post"
-        android:icon="@drawable/twotone_camera_alt_24" />
+<!--    <item android:title=""-->
+<!--        android:id="@+id/bottomNav_post"-->
+<!--        android:icon="@drawable/twotone_camera_alt_24" />-->
 
-    <item android:title=""
-        android:id="@+id/bottomNav_notify"
-        android:icon="@drawable/twotone_notifications_24" />
+<!--    <item android:title=""-->
+<!--        android:id="@+id/bottomNav_notify"-->
+<!--        android:icon="@drawable/twotone_notifications_24" />-->
 
-    <item android:title=""
-        android:id="@+id/bottomNav_user"
-        android:icon="@drawable/twotone_person_black_24" />
+<!--    <item android:title=""-->
+<!--        android:id="@+id/bottomNav_user"-->
+<!--        android:icon="@drawable/twotone_person_black_24" />-->
+        <item
+            app:showAsAction="ifRoom"
+            android:title=""
+            android:id="@+id/bottomNav_discover"
+            android:icon="@drawable/twotone_search_black_24" />
+
+        <item android:title=""
+            app:showAsAction="ifRoom"
+            android:id="@+id/bottomNav_user"
+            android:icon="@drawable/twotone_person_black_24" />
 
 </menu>

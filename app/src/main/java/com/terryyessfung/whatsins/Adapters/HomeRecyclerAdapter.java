@@ -165,18 +165,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         }
     }
 
-    private  void addNotifications(String userId, String postId){
-        // TODO : notify user click your photo
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(userId);
-//        HashMap<String,Object> hashMap = new HashMap<>();
-//        hashMap.put("userid", mAuth.getUid());
-//        hashMap.put("message", "like you post");
-//        hashMap.put("postid", postId);
-//        hashMap.put("ispost", true);
-//
-//        reference.push().setValue(hashMap);
-    }
-
     /**
      * Check the like list isn't include the current user id
      * if yes , that means the photo is liked

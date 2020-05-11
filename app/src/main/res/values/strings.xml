@@ -36,5 +36,6 @@
     <string name="descover_square">Square</string>
     <string name="descover_search">Search</string>
     <string name="register_email_not_correct">Email not validate</string>
+    <string name="post_img_wrong">No image Selected</string>
 
 </resources>

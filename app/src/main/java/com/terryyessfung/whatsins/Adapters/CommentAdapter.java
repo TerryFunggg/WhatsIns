@@ -44,32 +44,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //holder.comment_avatar.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_transition_anim));
-        //holder.mRelativeLayout.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_transition_anim));
         final Comment comment = mComments.get(position);
         Log.d("Comment",comment.getCreatedAt());
         holder.date.setText(Helper.getInstance().formatDate(comment.getCreatedAt()));
         holder.comment.setText(comment.getComment());
         getUserInfo(holder.comment_avatar, holder.usernname, comment.getPublisher());
-
-        //TODO: onClick comment body
-//        holder.comment.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(mContext, MainActivity.class);
-//                intent.putExtra("publisherid", comment.getPublisher());
-//                mContext.startActivity(intent);
-//            }
-//        });
-        // TODO: onClick comment box avatar
-//        holder.comment_avatar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(mContext, MainActivity.class);
-//                intent.putExtra("publisherid", comment.getPublisher());
-//                mContext.startActivity(intent);
-//            }
-//        });
     }
 
     @Override

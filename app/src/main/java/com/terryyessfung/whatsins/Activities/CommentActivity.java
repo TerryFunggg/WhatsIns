@@ -112,17 +112,6 @@ public class CommentActivity extends AppCompatActivity {
 
     }
 
-    // TODO: notify user comment
-    private  void addNotifications(){
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(publisherId);
-//        HashMap<String,Object> hashMap = new HashMap<>();
-//        hashMap.put("userid", mFirebaseUser.getUid());
-//        hashMap.put("message", addComment.getText().toString());
-//        hashMap.put("postid", postid);
-//        hashMap.put("ispost", true);
-//
-//        reference.push().setValue(hashMap);
-    }
 
     private void getComment(){
         Call<CommentList> call = DataManager.getInstance().getAPIService().getCommentByPostId(postid);

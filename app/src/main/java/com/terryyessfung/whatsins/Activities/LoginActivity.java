@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
         Call<ResponseBody> call;
         // different options api call for register ,
         // one is have avatar , another the avatar is null
-        call = imgBody == null ? DataManager.getInstance().getAPIService().register(rname,remail,rpassword)
+        call = avatarURI == null ? DataManager.getInstance().getAPIService().register(rname,remail,rpassword)
                 : DataManager.getInstance().getAPIService().registerWithImg(rname,remail,rpassword,imgBody);
         call.enqueue(new Callback<ResponseBody>() {
             @Override

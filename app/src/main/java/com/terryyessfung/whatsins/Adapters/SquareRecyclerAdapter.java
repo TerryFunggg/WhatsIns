@@ -37,8 +37,8 @@ public class SquareRecyclerAdapter extends RecyclerView.Adapter<SquareRecyclerAd
     public void onBindViewHolder(@NonNull ImageViewHolder holder, final int position) {
         // bind image here
         Picasso.get().load(mdata.get(position).getImage())
-
-                //.fit()
+                .fit()
+                .centerInside()
                 //.centerCrop()
                 .placeholder(R.drawable.placeholder)
                 .into(holder.img);

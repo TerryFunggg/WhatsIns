@@ -116,7 +116,7 @@ public class SquareFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (mSensorManager != null) {// 取消监听器
+        if (mSensorManager != null) {
             mSensorManager.unregisterListener(mSensorEventListener);
         }
     }
@@ -153,21 +153,5 @@ public class SquareFragment extends Fragment {
 
         }
     };
-
-//
-//                        new SoundPool.OnLoadCompleteListener() {
-//@Override
-//public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-
-//        }
-//
-//
-//
-//
-//        @Override
-//        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-//
-//        }
-//    };
 
 }

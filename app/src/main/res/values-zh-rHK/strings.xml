@@ -36,5 +36,6 @@
     <string name="descover_square">廣場</string>
     <string name="descover_search">搜索</string>
     <string name="register_email_not_correct">電郵地址格式錯誤</string>
+    <string name="post_img_wrong">沒有選擇圖片</string>
 
 </resources>

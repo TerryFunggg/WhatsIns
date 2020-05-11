@@ -15,9 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
             app:tabRippleColor="@color/content_text_color"
-            app:tabIndicatorColor="@color/colorPrimaryDark"
+            app:tabIndicatorColor="@color/colorAccent"
             app:tabIndicatorFullWidth="false"
-            app:tabTextColor="@color/colorPrimaryDark"/>
+            app:tabTextColor="@color/colorAccent"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager

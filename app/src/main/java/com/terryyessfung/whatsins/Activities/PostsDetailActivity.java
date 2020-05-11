@@ -44,8 +44,6 @@ public class PostsDetailActivity extends AppCompatActivity {
     public final static String PUBLISHER_ID = "com.terryyessfung.whatsins.PostsDetailActivity.PUBLISHER_ID";
    private ImageView post_img,avator,close,more;
    private TextView username,desc,label;
-//   private CheckBox like;
-//   private CheckBox comment;
    private String muid;
     private String mDesc;
    private String postid;
@@ -60,8 +58,6 @@ public class PostsDetailActivity extends AppCompatActivity {
         post_img = findViewById(R.id.post_detail_postImg);
         avator = findViewById(R.id.post_detail_avator);
         username = findViewById(R.id.post_detail_username);
-//        like = findViewById(R.id.post_detail_fav);
-//        comment = findViewById(R.id.post_detail_comment);
         desc = findViewById(R.id.post_detail_desc);
         close = findViewById(R.id.post_detail_close);
         more = findViewById(R.id.post_detail_more);

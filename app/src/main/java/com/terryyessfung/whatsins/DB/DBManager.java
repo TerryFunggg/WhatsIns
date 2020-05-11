@@ -11,12 +11,6 @@ public class DBManager {
     private static DatabaseHelper mDatabaseHelper;
     private static SQLiteDatabase mDatabase;
 
-
-//    private DBManager open() throws SQLException{
-//        mDatabaseHelper = new DatabaseHelper(mContext);
-//        mDatabase = mDatabaseHelper.getWritableDatabase();
-//        return this;
-//    }
     public static DBManager getInstance(Context context) throws SQLException{
         mDBManager = new DBManager();
         mDatabaseHelper = new DatabaseHelper(context);
@@ -57,7 +51,6 @@ public class DBManager {
     private int updateUserToken(String uid, String token){
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.token,token);
-        //int i = mDatabase.update(DatabaseHelper.TABLE_NAME,contentValues,DatabaseHelper._id + " = "+ uid,null);
         int i = mDatabase.update(DatabaseHelper.TABLE_NAME,contentValues,DatabaseHelper._id + " = "+ uid,null);
         return i;
     }

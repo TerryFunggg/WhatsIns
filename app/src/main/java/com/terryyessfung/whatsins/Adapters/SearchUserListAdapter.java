@@ -125,18 +125,6 @@ public class SearchUserListAdapter extends RecyclerView.Adapter<SearchUserListAd
         });
     }
 
-    private  void addNotifications(String userId){
-        // TODO Notification the user following
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(userId);
-//        HashMap<String,Object> hashMap = new HashMap<>();
-//        hashMap.put("userid", mFirebaseUser.getUid());
-//        hashMap.put("message", "Start follow you");
-//        hashMap.put("postid", "");
-//        hashMap.put("ispost", false);
-//
-//        reference.push().setValue(hashMap);
-    }
-
     @Override
     public int getItemCount() {
         return mUserList.size();
@@ -166,26 +154,5 @@ public class SearchUserListAdapter extends RecyclerView.Adapter<SearchUserListAd
                 }
             }
         }
-
-
-
-
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-//                .child("Follow").child(mFirebaseUser.getUid()).child("following");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.child(userId).exists()){
-//                    button.setText("following");
-//                }else {
-//                    button.setText("follow");
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
     }
 }
