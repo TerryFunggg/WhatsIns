@@ -1,33 +1,39 @@
 package com.terryyessfung.whatsins.Model;
 
 public class Post {
-    private String postID;
-    private String postImage;
+    private String _id;
     private String publisher;
+    private String desc;
+    private String image;
+    private String label;
+    private String[] like;
 
     public Post() {
     }
 
-    public Post(String postID, String postImage, String publisher) {
-        this.postID = postID;
-        this.postImage = postImage;
+    public Post(String _id, String publisher, String desc, String image, String[] like,String label) {
+        this._id = _id;
         this.publisher = publisher;
+        this.desc = desc;
+        this.image = image;
+        this.like = like;
+        this.label = label;
     }
 
-    public String getPostID() {
-        return postID;
+    public String[] getLike() {
+        return like;
     }
 
-    public void setPostID(String postID) {
-        this.postID = postID;
+    public void setLike(String[] like) {
+        this.like = like;
     }
 
-    public String getPostImage() {
-        return postImage;
+    public String get_id() {
+        return _id;
     }
 
-    public void setPostImage(String postImage) {
-        this.postImage = postImage;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getPublisher() {
@@ -36,5 +42,29 @@ public class Post {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 }

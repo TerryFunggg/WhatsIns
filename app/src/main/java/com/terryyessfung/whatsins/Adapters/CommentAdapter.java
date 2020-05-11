@@ -1,11 +1,10 @@
 package com.terryyessfung.whatsins.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,26 +12,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-import com.terryyessfung.whatsins.Activities.MainActivity;
+import com.terryyessfung.whatsins.DataManager;
+import com.terryyessfung.whatsins.Helper;
 import com.terryyessfung.whatsins.Model.Comment;
 import com.terryyessfung.whatsins.Model.User;
 import com.terryyessfung.whatsins.R;
 
 import java.util.List;
 
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>  {
     private Context mContext;
     private List<Comment> mComments;
-
-    private FirebaseUser mFirebaseUser;
 
     public CommentAdapter(Context context, List<Comment> comments) {
         mContext = context;
@@ -48,13 +44,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        holder.comment_avatar.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_transition_anim));
-        holder.mRelativeLayout.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_transition_anim));
-
-        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        //holder.comment_avatar.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_transition_anim));
+        //holder.mRelativeLayout.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_transition_anim));
         final Comment comment = mComments.get(position);
-
+        Log.d("Comment",comment.getCreatedAt());
+        holder.date.setText(Helper.getInstance().formatDate(comment.getCreatedAt()));
         holder.comment.setText(comment.getComment());
         getUserInfo(holder.comment_avatar, holder.usernname, comment.getPublisher());
 
@@ -85,7 +79,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public ImageView comment_avatar;
-        public TextView usernname , comment;
+        public TextView usernname , comment,date;
         public RelativeLayout mRelativeLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,21 +88,23 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             usernname = itemView.findViewById(R.id.comment_title);
             comment = itemView.findViewById(R.id.comment_body);
             mRelativeLayout = itemView.findViewById(R.id.comment_relativelayout);
+            date = itemView.findViewById(R.id.comment_date);
         }
     }
     private void getUserInfo(final ImageView avatar, final TextView username, String publisherid){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(publisherid);
-
-        reference.addValueEventListener(new ValueEventListener() {
+        Call<User> call = DataManager.getInstance().getAPIService().getUserByID(publisherid);
+        call.enqueue(new Callback<User>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                Picasso.get().load(user.getAvatar()).into(avatar);
-                username.setText(user.getUsername());
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.isSuccessful()){
+                    User user = response.body();
+                    Picasso.get().load(user.getAvatar()).into(avatar);
+                    username.setText(user.getName());
+                }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onFailure(Call<User> call, Throwable t) {
 
             }
         });

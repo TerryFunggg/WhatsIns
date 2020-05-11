@@ -13,7 +13,28 @@
     <string name="register_question">Already Have account?</string>
     <string name="start_register">Register</string>
     <string name="start_login">Login</string>
+    <string name="add_comment_hint">add comment</string>
+    <string name="send_comment">send</string>
+    <string name="edit_profile_title">Edit Profile</string>
+    <string name="post_btn">Post</string>
+    <string name="post_description">Description</string>
+    <string name="profile_posts">Posts</string>
+    <string name="profile_following">Following</string>
+    <string name="profile_followers">Followers</string>
+    <string name="search_hint">Search..</string>
+    <string name="post_detail_title">Edit Description</string>
+    <string name="post_detail_positive_button">Edit</string>
+    <string name="post_detail_neutralBtn">Cancel</string>
+    <string name="login_error_email">Email already used</string>
+    <string name="login_error_not_correct">Email/password not correct</string>
+    <string name="login_hint_1">Having account? Login!</string>
+    <string name="login_hint_2">new user? Join us!</string>
+    <string name="profile_edit_profile_btn">Edit Profile</string>
+    <string name="post_detail_more_edit">Edit</string>
+    <string name="post_detail_more_delete">Delete</string>
+    <string name="profile_menu_logout">Logout</string>
+    <string name="descover_square">Square</string>
+    <string name="descover_search">Search</string>
+    <string name="register_email_not_correct">Email not validate</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

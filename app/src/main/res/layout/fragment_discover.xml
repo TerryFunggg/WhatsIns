@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/discover_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/discover_tabBar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            app:tabRippleColor="@color/content_text_color"
+            app:tabIndicatorColor="@color/colorPrimaryDark"
+            app:tabIndicatorFullWidth="false"
+            app:tabTextColor="@color/colorPrimaryDark"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:layout_below="@id/discover_bar"
+        android:id="@+id/discover_ViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

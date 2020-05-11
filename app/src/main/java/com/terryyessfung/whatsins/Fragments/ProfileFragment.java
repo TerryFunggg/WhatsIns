@@ -1,56 +1,54 @@
 package com.terryyessfung.whatsins.Fragments;
 
-import android.content.Context;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-import com.terryyessfung.whatsins.Activities.OptionActivity;
+import com.terryyessfung.whatsins.Activities.MainActivity;
+import com.terryyessfung.whatsins.Activities.StartActivity;
 import com.terryyessfung.whatsins.Adapters.ProfilePostImgAdapter;
+import com.terryyessfung.whatsins.DB.DBManager;
+import com.terryyessfung.whatsins.DataManager;
 import com.terryyessfung.whatsins.Model.Post;
+import com.terryyessfung.whatsins.Model.PostsList;
 import com.terryyessfung.whatsins.Model.User;
 import com.terryyessfung.whatsins.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
 
     ImageView mImage_avatar,mbtn_options;
-    TextView mnum_posts,mnum_followers,mnum_following,mbio,musername;
+    TextView mnum_posts,mnum_followers,mnum_following,musername;
     Button medit_profile;
 
     RecyclerView mRecyclerView;
     ProfilePostImgAdapter mProfilePostImgAdapter;
     List<Post> mPostImgList;
 
-    FirebaseUser mFirebaseUser;
-    String profileid;
+    private String mUid;
 
 
     @Override
@@ -58,68 +56,58 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        SharedPreferences prefs = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE);
-        profileid = prefs.getString("profileID", "none");
+        mUid = DBManager.getInstance(getContext()).getUid();
 
         mImage_avatar = view.findViewById(R.id.profile_avatar);
         mbtn_options = view.findViewById(R.id.profile_btn_options);
         mnum_posts = view.findViewById(R.id.profile_num_posts);
         mnum_followers = view.findViewById(R.id.profile_num_followers);
         mnum_following = view.findViewById(R.id.profile_num_following);
-        //mbio = view.findViewById(R.id.);
         musername = view.findViewById(R.id.profile_username);
         medit_profile = view.findViewById(R.id.profile_edit_profile);
+        medit_profile.setVisibility(View.GONE);
 
         mRecyclerView = view.findViewById(R.id.profile_post_img_list);
-        //StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 3);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mPostImgList = new ArrayList<>();
         mProfilePostImgAdapter = new ProfilePostImgAdapter(getContext(),mPostImgList);
         mRecyclerView.setAdapter(mProfilePostImgAdapter);
+        medit_profile.setText(R.string.profile_edit_profile_btn);
 
         userInfo();
-        getFollowers();
-        getNumOfPost();
         fetchPostImgeList();
 
-        if (profileid.equals(mFirebaseUser.getUid())){
-            medit_profile.setText("Edit Profile");
-        }else {
-            checkFollow();
-        }
-
+        // edit profile
         medit_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 String btn = medit_profile.getText().toString();
+                //TODO: Edit profile
 
-                 if(btn.equals("Edit Profile")){
-
-                 }else if(btn.equals("follow")){
-                     FirebaseDatabase.getInstance().getReference().child("Follow").child(mFirebaseUser.getUid())
-                             .child("following").child(profileid).setValue(true);
-                     FirebaseDatabase.getInstance().getReference().child("Follow").child(profileid)
-                             .child("followers").child(mFirebaseUser.getUid()).setValue(true);
-                     // add notification to user
-                     addNotifications();
-                 }else if(btn.equals("following")){
-                     FirebaseDatabase.getInstance().getReference().child("Follow").child(mFirebaseUser.getUid())
-                             .child("following").child(profileid).removeValue();
-                     FirebaseDatabase.getInstance().getReference().child("Follow").child(profileid)
-                             .child("followers").child(mFirebaseUser.getUid()).removeValue();
-
-
-                 }
             }
         });
 
         mbtn_options.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), OptionActivity.class);
-                startActivity(intent);
+
+                PopupMenu menu = new PopupMenu(getContext(),v);
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.profile_menu_logout:
+                                DBManager.getInstance(getContext()).deleteUserToken(mUid);
+                                startActivity(new Intent(getActivity(), StartActivity.class));
+                                getActivity().finish();
+                                return true;
+
+                        }
+                        return false;
+                    }
+                });
+                menu.inflate(R.menu.profile_menu);
+                menu.show();
             }
         });
 
@@ -127,120 +115,51 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private  void addNotifications(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(profileid);
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("userid", mFirebaseUser.getUid());
-        hashMap.put("message", "started follow you");
-        hashMap.put("postid", "");
-        hashMap.put("ispost", false);
 
-        reference.push().setValue(hashMap);
-    }
+
 
     private void userInfo(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(profileid);
-        reference.addValueEventListener(new ValueEventListener() {
+        Call<User> call =  DataManager.getInstance().getAPIService().getUserByID(mUid);
+        call.enqueue(new Callback<User>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(getContext() == null){
-                    return;
-                }
-                User user = dataSnapshot.getValue(User.class);
-                Picasso.get().load(user.getAvatar()).into(mImage_avatar);
-                musername.setText(user.getUsername());
-            }
+            public void onResponse(Call<User> call, Response<User> response) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void checkFollow(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                .child("Follows").child(mFirebaseUser.getUid()).child("following");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(profileid).exists()){
-                    medit_profile.setText("following");
-                }else{
-                    medit_profile.setText("follow");
+                if(response.code() == 200){
+                   User user = response.body();
+                    Log.d("ProfileFragment", user.getAvatar());
+                   Picasso.get()
+                           .load(user.getAvatar())
+                           .resize(90,90)
+                           .placeholder(R.drawable.placeholder)
+                           .into(mImage_avatar);
+                   musername.setText(user.getName());
+                   mnum_posts.setText(user.getPost_num()+"");
+                   mnum_followers.setText(user.getFollowers_num()+"");
+                   mnum_following.setText(user.getFollowing_num()+"");
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void getFollowers(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                .child("Follow").child(profileid).child("followers");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mnum_followers.setText("" + dataSnapshot.getChildrenCount());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onFailure(Call<User> call, Throwable t) {
 
             }
         });
 
-        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference()
-                .child("Follow").child(profileid).child("following");
-
-        reference1.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mnum_following.setText("" + dataSnapshot.getChildrenCount());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void getNumOfPost(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int i = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Post post = snapshot.getValue(Post.class);
-                    if(post.getPublisher().equals(profileid)){
-                        i++;
-                    }
-                }
-                mnum_posts.setText("" + i);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private void fetchPostImgeList(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
-        reference.addValueEventListener(new ValueEventListener() {
+        Log.d("ProfileFragment","fetch image");
+        mPostImgList.clear();
+        mProfilePostImgAdapter.notifyDataSetChanged();
+        Call<PostsList> call = DataManager.getInstance().getAPIService().getPostsByUid(mUid);
+        call.enqueue(new Callback<PostsList>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onResponse(Call<PostsList> call, Response<PostsList> response) {
                 mPostImgList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Post post = snapshot.getValue(Post.class);
-                    if(post.getPublisher().equals(profileid)){
+                mProfilePostImgAdapter.notifyDataSetChanged();
+                if(response.isSuccessful()){
+                    PostsList lists = response.body();
+                    for(Post post : lists.getPosts()){
                         mPostImgList.add(post);
                     }
                 }
@@ -249,10 +168,16 @@ public class ProfileFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onFailure(Call<PostsList> call, Throwable t) {
 
             }
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        userInfo();
+        fetchPostImgeList();
+    }
 }

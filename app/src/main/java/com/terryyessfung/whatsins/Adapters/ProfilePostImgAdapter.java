@@ -1,6 +1,7 @@
 package com.terryyessfung.whatsins.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
+import com.terryyessfung.whatsins.Activities.PostsDetailActivity;
 import com.terryyessfung.whatsins.Fragments.PostDetailFragment;
 import com.terryyessfung.whatsins.Model.Post;
 import com.terryyessfung.whatsins.R;
@@ -35,19 +37,21 @@ public class ProfilePostImgAdapter extends RecyclerView.Adapter<ProfilePostImgAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         final Post post = mPostList.get(position);
-        Picasso.get().load(post.getPostImage()).placeholder(R.drawable.placeholder).into(holder.post_img);
+        Picasso.get().load(post.getImage())
+                .fit()
+                .centerCrop()
+                .placeholder(R.drawable.placeholder)
+                .into(holder.post_img);
 
         holder.post_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-                editor.putString("postID", post.getPostID());
-                editor.apply();
-
-                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.main_container, new PostDetailFragment()).commit();
+                Intent intent = new Intent(mContext, PostsDetailActivity.class);
+                intent.putExtra(PostsDetailActivity.POST_ID,mPostList.get(position).get_id());
+                intent.putExtra(PostsDetailActivity.PUBLISHER_ID,mPostList.get(position).getPublisher());
+                mContext.startActivity(intent);
             }
         });
     }
